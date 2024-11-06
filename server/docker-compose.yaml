@@ -1,0 +1,24 @@
+services:
+  backend:
+    build:
+      context: .
+      target: production
+    ports:
+      - '${PORT}:${PORT}'
+    environment:
+      - PORT=${PORT}
+      - NODE_ENV=${NODE_ENV}
+      - REDIS_URL=${REDIS_URL}
+
+  redis:
+    image: redis:latest
+    ports:
+      - '6379:6379'
+    volumes:
+      - redis-data:/data
+    command: redis-server --appendonly yes
+    restart: always
+
+volumes:
+  db-data:
+  redis-data:
