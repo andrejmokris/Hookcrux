@@ -22,6 +22,7 @@ export const createEvent = async (sessionId: string, req: Request) => {
     path: reqPath,
     body: req.body,
     headers: req.headers,
+    method: req.method,
   };
 
   await forwardEvent(sessionId, newEvent);
@@ -36,7 +37,7 @@ export const forwardEvent = async (sessionId: string, event: HookEvent) => {
     const clientObject = clientsMap.get(client);
     if (clientObject) {
       logger.info(`Forwarding event to client ${client}`);
-      clientObject.write(`data: ${JSON.stringify(event)}\n\n`);
+      clientObject.write(`event: hook-event\ndata: ${JSON.stringify(event)}\n\n`);
     }
   }
 };
@@ -54,7 +55,7 @@ export const subscribe = async (sessionId: string, clientId: string, res: Respon
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
 
-  res.write(`data: ${JSON.stringify({ message: 'connection successfull' })}\n\n`);
+  res.write(`event: info\ndata: ${JSON.stringify({ message: 'connection successfull' })}\n\n`);
 };
 
 export const unsubscribe = async (sessionId: string, clientId: string) => {

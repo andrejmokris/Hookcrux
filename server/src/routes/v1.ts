@@ -9,7 +9,7 @@ router.get('/webhook-sessions/:id', sessionController.get);
 router.post('/webhook-sessions/new', sessionController.create);
 
 // Get new event from the producer
-router.post('/webhook-sessions/:id/send-event/*', eventController.create);
+router.all('/webhook-sessions/:id/send-event/*', eventController.create);
 
 router.get('/webhook-sessions/:id/events', eventController.subscribe);
 
