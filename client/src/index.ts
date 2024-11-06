@@ -9,7 +9,7 @@ import { logger } from './utils/logger';
 
 let sessionId = '';
 let forwardURL = 'http://localhost:3000';
-let baseServerURL = `http://localhost:3000`;
+let baseServerURL = `https://mokris.fit`;
 
 const program = new Command();
 
