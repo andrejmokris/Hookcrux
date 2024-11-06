@@ -9,6 +9,7 @@ import { logger } from './utils/logger';
 
 let sessionId = '';
 let forwardURL = 'http://localhost:3000';
+let baseServerURL = `http://localhost:3000`;
 
 const program = new Command();
 
@@ -17,14 +18,16 @@ program.name('hookcrux').description('Hookcrux CLI - webhook monitoring and forw
 program
   .argument('<sessionId>', 'Session ID to monitor')
   .option('-f, --forward <url>', 'URL to forward webhooks to')
+  .option('-s, --server <url>', 'Server URL')
   .action((_sessionId: string, options) => {
     sessionId = _sessionId;
     forwardURL = options.forward || forwardURL;
+    baseServerURL = options.server || baseServerURL;
   });
 
 program.parse();
 
-const serverURL = `http://localhost:3000/api/v1/webhook-sessions/${sessionId}/events`;
+const serverURL = `${baseServerURL}/api/v1/webhook-sessions/${sessionId}/events`;
 
 const es = new EventSource(serverURL);
 
