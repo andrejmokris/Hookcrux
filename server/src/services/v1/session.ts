@@ -5,7 +5,7 @@ import { NotFoundError } from '@app/utils/errors';
 import moment from 'moment';
 
 export const createSession = async () => {
-  const newSession: HookSession = {
+  const newSession: Partial<HookSession> = {
     id: generateSessionToken(),
     createdAt: moment().format(),
   };
@@ -22,5 +22,7 @@ export const getSession = async (sessionId: string) => {
     throw new NotFoundError('Session not found');
   }
 
-  return JSON.parse(session) as HookSession;
+  const sessionClients = await redisClient.sMembers(`sse-clients:${sessionId}`);
+
+  return { ...JSON.parse(session), connectedUsers: sessionClients.length } as HookSession;
 };

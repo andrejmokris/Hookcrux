@@ -7,7 +7,7 @@ import { Request, Response } from 'express';
 
 const clientsMap: Map<string, Response> = new Map();
 
-const SSE_CLIENTS_PREFIX = 'sse-clients:';
+const SSE_CLIENTS_PREFIX = 'sse-clients';
 
 export const createEvent = async (sessionId: string, req: Request) => {
   const session = await redisClient.get(`session-${sessionId}`);
@@ -21,6 +21,7 @@ export const createEvent = async (sessionId: string, req: Request) => {
   const newEvent: HookEvent = {
     path: reqPath,
     body: req.body,
+    headers: req.headers,
   };
 
   await forwardEvent(sessionId, newEvent);
@@ -53,7 +54,7 @@ export const subscribe = async (sessionId: string, clientId: string, res: Respon
   res.setHeader('Cache-Control', 'no-cache');
   res.setHeader('Connection', 'keep-alive');
 
-  res.write(`data: ${JSON.stringify({ message: 'hello' })}\n\n`);
+  res.write(`data: ${JSON.stringify({ message: 'connection successfull' })}\n\n`);
 };
 
 export const unsubscribe = async (sessionId: string, clientId: string) => {
