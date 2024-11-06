@@ -19,6 +19,7 @@ const FORWARD_HEADERS = [
   'x-slack-request-timestamp',
   'x-request-id',
   'x-correlation-id',
+  'x-api-key',
 ];
 
 export const forwardRequest = async (forwardURL: string, request: HookEvent) => {
