@@ -14,3 +14,9 @@ export const forwardRequest = async (forwardURL: string, request: HookEvent) => 
     logger.error('Error forwarding request: ' + e);
   }
 };
+
+export const printRequest = (request: HookEvent) => {
+  logger.info(
+    chalk.green('✓ Request received: ') + chalk.yellow(`${request.method.toUpperCase()} `) + chalk.blue(request.path),
+  );
+};

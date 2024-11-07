@@ -8,6 +8,9 @@
     "build": "rimraf dist && tsc && tsc-alias",
     "dev": "ts-node src/index.ts"
   },
+  "bin": {
+    "hookcrux": "dist/index.js"
+  },
   "author": "Andrej Mokris",
   "license": "ISC",
   "devDependencies": {
