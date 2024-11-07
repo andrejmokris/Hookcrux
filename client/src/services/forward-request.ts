@@ -6,6 +6,7 @@ const FORWARD_HEADERS = [
   'content-type',
   'authorization',
   'user-agent',
+  'E-tag',
   'x-hub-signature',
   'x-hub-signature-256',
   'x-github-event',
