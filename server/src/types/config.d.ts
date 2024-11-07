@@ -19,4 +19,6 @@ export type Config = {
   logger: {
     level: string;
   };
+  allowedHeaders: string[];
+  blockedHeaders: string[];
 };

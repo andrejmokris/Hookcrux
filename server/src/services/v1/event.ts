@@ -10,18 +10,26 @@ const clientsMap: Map<string, Response> = new Map();
 const SSE_CLIENTS_PREFIX = 'sse-clients';
 
 export const createEvent = async (sessionId: string, req: Request) => {
-  const session = await redisClient.get(`session-${sessionId}`);
+  const session = await sessionService.getSession(sessionId);
 
   if (!session) {
     throw new NotFoundError('Session not found');
   }
 
-  const reqPath = req.path.split('send-event')[1];
+  const reqPath = req.path.split('send-event').slice(1).join('');
+
+  const forwardHeaders = new Headers();
+
+  session.allowedHeaders.forEach((header) => {
+    if (req.headers[header]) {
+      forwardHeaders.append(header, String(req.headers[header]));
+    }
+  });
 
   const newEvent: HookEvent = {
     path: reqPath,
     body: req.body,
-    headers: req.headers,
+    headers: forwardHeaders,
     method: req.method,
   };
 

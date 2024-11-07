@@ -25,7 +25,7 @@ export const LandingPage = () => {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           Tired of setting up Ngrok tunnels or mocking webhooks? Hookcrux streamlines development with webhooks. Get
-          that Stripe webhook locally.
+          that Stripe webhook.
         </motion.p>
         <motion.div
           className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-4"

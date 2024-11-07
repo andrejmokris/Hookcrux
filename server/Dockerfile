@@ -20,4 +20,10 @@ RUN npm ci --omit=dev
 
 COPY --from=build /app/dist ./dist
 
-CMD ["node", "dist/server.js"]
+COPY --from=build /app/prisma ./prisma
+COPY ./entrypoint.sh /entrypoint.sh
+
+RUN npx prisma generate
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
