@@ -1,9 +1,9 @@
 import { config } from '@app/config/defaults';
 import { db } from '@app/db/prisma';
 import { redisClient } from '@app/db/redis';
+import { HookSession } from '@app/types/session';
 import { NotFoundError } from '@app/utils/errors';
 import { logger } from '@app/utils/logger';
-import { HookSession } from '@prisma/client';
 
 export const createSession = async () => {
   const newSession = await db.hookSession.create({
