@@ -12,7 +12,7 @@ const program = new Command();
 program
   .name('hookcrux')
   .description('Hookcrux CLI - webhook monitoring and forwarding tool')
-  .version('0.0.1')
+  .version('0.0.3')
   .argument('<sessionId>', 'Session ID to monitor')
   .option('-f, --forward <url>', 'URL to forward webhooks to')
   .option('-s, --server <url>', 'Server URL', 'https://mokris.fit')
@@ -29,7 +29,7 @@ async function startWebhookMonitor(sessionId: string, forwardURL: string, baseSe
   if (forwardURL) {
     logger.info('Forwarding events to: ' + chalk.green(forwardURL));
   } else {
-    logger.info('No forward URL set. Logging events to console');
+    logger.info(chalk.yellow('No forward URL set. Logging events to console'));
   }
 
   logger.info('Session id: ' + chalk.green(sessionId));

@@ -31,6 +31,7 @@ export const createEvent = async (sessionId: string, req: Request) => {
     body: req.body,
     headers: forwardHeaders,
     method: req.method,
+    query: req.query,
   };
 
   await forwardEvent(sessionId, newEvent);

@@ -3,6 +3,7 @@ export type HookEvent = {
   body: Record<string, any>;
   headers: Record<string, any>;
   method: string;
+  query: Record<string, any>;
 };
 
 export type InfoEvent = {

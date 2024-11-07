@@ -12,6 +12,8 @@ export const createSession = async () => {
 
   await redisClient.set(`session-${newSession.id}`, JSON.stringify(newSession));
 
+  logger.info(`New session created: ${newSession.id}`);
+
   return newSession;
 };
 
