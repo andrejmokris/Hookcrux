@@ -12,10 +12,10 @@ const program = new Command();
 program
   .name('hookcrux')
   .description('Hookcrux CLI - webhook monitoring and forwarding tool')
-  .version('0.0.3')
+  .version('0.0.4')
   .argument('<sessionId>', 'Session ID to monitor')
   .option('-f, --forward <url>', 'URL to forward webhooks to')
-  .option('-s, --server <url>', 'Server URL', 'https://mokris.fit')
+  .option('-s, --server <url>', 'Server URL', 'https://api.mokris.fit')
   .action((sessionId, options) => {
     const { forward, server } = options;
     startWebhookMonitor(sessionId, forward, server);
