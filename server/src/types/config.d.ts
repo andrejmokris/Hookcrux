@@ -15,6 +15,9 @@ export type Config = {
   server: {
     port: number;
     hostname: string;
+    corsOptions: {
+      origin: string[];
+    };
   };
   logger: {
     level: string;

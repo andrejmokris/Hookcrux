@@ -1,11 +1,23 @@
 import { FeatureCard } from '@/components/feature-card';
 import { StepCard } from '@/components/step-card';
+import { apiClient } from '@/lib/api';
+import { useMutation } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
-import { ChevronRight, RefreshCw, Terminal, Zap } from 'lucide-react';
+import { ChevronRight, LoaderCircle, RefreshCw, Terminal, Zap } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export const LandingPage = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
+
+  const startSessions = useMutation({
+    mutationKey: ['start-sessions'],
+    mutationFn: async () => {
+      const { data } = await apiClient.post<HookSession>('/webhook-sessions/new');
+      navigate(`/session/${data.id}`);
+    },
+  });
 
   return (
     <main className="relative">
@@ -33,14 +45,14 @@ export const LandingPage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
+          <button
+            onClick={() => startSessions.mutateAsync()}
+            className="py-3 w-40 bg-blue-600 text-white rounded-full font-semibold text-lg hover:bg-blue-700 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center justify-center"
+          >
+            {startSessions.isPending ? <LoaderCircle className="animate-spin" /> : 'Get Started'}
+          </button>
           <a
             href="#get-started"
-            className="px-8 py-3 bg-blue-600 text-white rounded-full font-semibold text-lg hover:bg-blue-700 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
-          >
-            Get Started
-          </a>
-          <a
-            href="#"
             className="px-8 py-3 bg-gray-800 text-white rounded-full font-semibold text-lg hover:bg-gray-700 transition-colors duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1 flex items-center"
           >
             Learn More <ChevronRight className="ml-2 w-5 h-5" />
@@ -120,7 +132,7 @@ export const LandingPage = () => {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
           >
-            npm install -g hookcrux-cli
+            npx hookcrux-client
           </motion.p>
         )}
       </section>

@@ -2,7 +2,7 @@ import { Github, Zap } from 'lucide-react';
 
 export const Footer = () => {
   return (
-    <footer className="relative bg-gray-900 py-12">
+    <footer className="relative bg-gray-900 py-8">
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center space-x-2 mb-4 md:mb-0">
@@ -31,7 +31,7 @@ export const Footer = () => {
             </ul>
           </nav>
         </div>
-        <div className="mt-8 text-center text-sm text-gray-500">
+        <div className="mt-6 text-center text-sm text-gray-500">
           © {new Date().getFullYear()} Hookcrux. All rights reserved.
         </div>
       </div>
