@@ -19,9 +19,9 @@ const defaultConfig: Config = {
   },
   server: {
     port: Number(getEnvironmentValue('PORT', '3000')),
-    hostname: 'strv-addressbook-mokris-andrej.onrender.com',
+    hostname: 'api.mokris.fit',
     corsOptions: {
-      origin: ['https://app.mokris.fit'],
+      origin: ['https://mokris.fit'],
     },
   },
   logger: {
