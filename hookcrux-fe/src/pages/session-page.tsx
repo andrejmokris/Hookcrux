@@ -1,9 +1,12 @@
 import CodeBlock from '@/components/code-block';
+import { useToast } from '@/hooks/use-toast';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 export const SessionPage = () => {
   const { id } = useParams();
+  const { toast } = useToast();
+
   const [hookEvents, setHookEvents] = useState<HookEvent[]>([]);
 
   useEffect(() => {
@@ -20,13 +23,18 @@ export const SessionPage = () => {
       console.log('Connection opened');
     };
 
-    eventSource.onerror = (error) => {
-      console.error('Error:', error);
+    eventSource.onerror = () => {
+      toast({
+        title: 'Failed to establish connection!',
+        description: 'Session may not exist, or the server may be down 😢.',
+        variant: 'destructive',
+      });
+      eventSource.close();
     };
 
     // terminating the connection on component unmount
     return () => eventSource.close();
-  }, [id]);
+  }, [id, toast]);
 
   return (
     <div className="container mx-auto px-4 space-y-8">
