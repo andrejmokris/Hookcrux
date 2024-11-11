@@ -32,7 +32,7 @@ export const WebhookCard: FC<HookEvent> = (props) => {
   };
 
   return (
-    <Card className="bg-background text-foreground dark:bg-gray-800 dark:text-gray-100 shadow-lg transition-all duration-300">
+    <Card className="bg-background text-foreground dark:bg-gray-800 dark:text-gray-100 shadow-lg transition-all duration-300 overflow-hidden">
       <CardHeader className="border-b border-gray-200 dark:border-gray-700">
         <CardTitle className="flex flex-col space-y-2">
           <div className="flex items-center justify-between">
@@ -66,7 +66,7 @@ export const WebhookCard: FC<HookEvent> = (props) => {
         <div className="flex items-center space-x-2">
           <User className="h-4 w-4 text-muted-foreground" />
           <span className="text-sm truncate" title={props.headers['user-agent']}>
-            {props.headers['user-agent'].slice(0, 60)}
+            {props.headers['user-agent']?.slice(0, 30)}
           </span>
         </div>
       </CardContent>
