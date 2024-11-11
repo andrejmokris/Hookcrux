@@ -35,7 +35,7 @@ export const SetupTutorial: FC<SetupTutorialProps> = ({ id }) => {
 
           <div className="space-y-3">
             <p className="font-semibold text-lg">Direct webhooks to:</p>
-            <CodeBlock command={`https://api.mokris.fit/api/v1/webhook-sessions/${id}/send-event/*`} />
+            <CodeBlock command={`${import.meta.env.VITE_API_URL}/api/v1/webhook-sessions/${id}/send-event/*`} />
             <p>
               The endpoint supports all methods (GET, POST, PUT, DELETE, etc.).{' '}
               <span className="font-semibold">Replace the *</span> with the route that matches your backend's webhook

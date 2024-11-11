@@ -33,6 +33,7 @@ export const createEvent = async (sessionId: string, req: Request) => {
   });
 
   const newEvent: HookEvent = {
+    sessionId: session.id,
     path: reqPath,
     body: req.body,
     headers: headersObj,
@@ -41,7 +42,7 @@ export const createEvent = async (sessionId: string, req: Request) => {
     hostname: String(req.hostname),
   };
 
-  const savedEvent = await db.hookEvent.create({ data: { sessionId: session.id, ...newEvent } });
+  const savedEvent = await db.hookEvent.create({ data: newEvent });
 
   await forwardEvent(sessionId, { ...newEvent, id: savedEvent.id });
 

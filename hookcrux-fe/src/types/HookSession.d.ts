@@ -4,4 +4,5 @@ type HookSession = {
   updatedAt: string;
   allowedHeaders: string[];
   name: string | null;
+  HookEvent: HookEvent[];
 };

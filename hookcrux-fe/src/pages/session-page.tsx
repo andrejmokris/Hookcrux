@@ -1,22 +1,33 @@
 import { SetupTutorial } from '@/components/setup-tutorial';
+import { WebhookCard } from '@/components/webhook-card';
 import { useToast } from '@/hooks/use-toast';
-import { useEffect, useState } from 'react';
+import { apiClient } from '@/lib/api';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 export const SessionPage = () => {
   const { id } = useParams();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
 
-  const [hookEvents, setHookEvents] = useState<HookEvent[]>([]);
+  const { data } = useQuery({
+    queryKey: ['session', id],
+    queryFn: async () => {
+      const { data } = await apiClient.get<HookSession>(`/webhook-sessions/${id}/detail`);
+      return data;
+    },
+  });
 
   useEffect(() => {
-    // opening a connection to the server to begin receiving events from it
     const eventSource = new EventSource(`${import.meta.env.VITE_API_URL}/api/v1/webhook-sessions/${id}/events`);
 
     eventSource.addEventListener('hook-event', async (event) => {
-      const data: HookEvent = JSON.parse(event.data);
-      console.log('Event received:', data);
-      setHookEvents((prevEvents) => [...prevEvents, data]);
+      const eventData: HookEvent = JSON.parse(event.data);
+      queryClient.setQueryData(['session', id], (prevData: HookSession) => ({
+        ...prevData,
+        HookEvent: [...prevData.HookEvent, eventData],
+      }));
     });
 
     eventSource.onopen = () => {
@@ -34,18 +45,16 @@ export const SessionPage = () => {
 
     // terminating the connection on component unmount
     return () => eventSource.close();
-  }, [id, toast]);
+  }, [id, queryClient, toast]);
 
   return (
     <div className="container mx-auto px-4 space-y-8">
       <SetupTutorial id={id} />
 
-      <div className="space-y-2">
-        <p className="text-lg font-semibold px-4">Session Events:</p>
-        <div className="flex flex-col gap-4">
-          {hookEvents.map((event, i) => (
-            <p key={i}>{JSON.stringify(event)}</p>
-          ))}
+      <div className="mx-auto px-4">
+        <h1 className="text-3xl font-bold mb-6 text-gray-800 dark:text-gray-200">Webhook Events</h1>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {data ? data.HookEvent.map((event) => <WebhookCard key={event.id} {...event} />) : <p>Loading...</p>}
         </div>
       </div>
     </div>

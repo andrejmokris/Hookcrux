@@ -13,7 +13,7 @@ export default function App() {
 
         <Header />
 
-        <main className="flex-grow relative z-10">
+        <main className="flex-grow relative z-10 pb-10">
           <Routes>
             <Route path="/" Component={LandingPage} />
             <Route path="/session/:id" Component={SessionPage} />
