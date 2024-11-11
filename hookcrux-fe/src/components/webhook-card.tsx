@@ -112,6 +112,11 @@ export const WebhookCard: FC<HookEvent> = (props) => {
                   margin: 0,
                   borderRadius: '6px',
                   minHeight: '120px',
+                  maxHeight: '300px',
+                  overflow: 'auto',
+                  scrollbarWidth: 'thin',
+                  scrollbarColor: '#374151 #1f2937',
+                  padding: '1rem',
                 }}
               >
                 {JSON.stringify(props.body, null, 2)}
@@ -128,6 +133,11 @@ export const WebhookCard: FC<HookEvent> = (props) => {
                   margin: 0,
                   borderRadius: '6px',
                   minHeight: '120px',
+                  maxHeight: '300px',
+                  overflow: 'auto',
+                  scrollbarWidth: 'thin',
+                  scrollbarColor: '#374151 #1f2937',
+                  padding: '1rem',
                 }}
               >
                 {JSON.stringify(props.headers, null, 2)}
@@ -144,8 +154,11 @@ export const WebhookCard: FC<HookEvent> = (props) => {
                   margin: 0,
                   borderRadius: '6px',
                   minHeight: '120px',
-                  maxHeight: '400px',
+                  maxHeight: '300px',
                   overflow: 'auto',
+                  scrollbarWidth: 'thin',
+                  scrollbarColor: '#374151 #1f2937',
+                  padding: '1rem',
                 }}
               >
                 {JSON.stringify(props.query, null, 2)}
