@@ -5,6 +5,8 @@ import { Router } from 'express';
 const router = Router();
 
 router.get('/webhook-sessions/:id', sessionController.get);
+router.get('/webhook-sessions/:id/detail', sessionController.getWithEvents);
+
 // Create new socket session
 router.post('/webhook-sessions/new', sessionController.create);
 

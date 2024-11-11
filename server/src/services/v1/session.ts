@@ -36,11 +36,26 @@ export const getSession = async (sessionId: string) => {
   }
 
   if (!foundInRedis) {
-    await redisClient.set(`session-${session.id}`, JSON.stringify(session));
+    await redisClient.setEx(`session-${session.id}`, 900, JSON.stringify(session));
   }
 
   // Retrieve the number of connected clients for the session
   const connectedUsers = await redisClient.sMembers(`sse-clients:${sessionId}`);
 
   return { ...session, connectedUsers: connectedUsers.length };
+};
+
+export const getSessionWithEvents = async (sessionId: string) => {
+  const sessionWithEvents = await db.hookSession.findUnique({
+    where: { id: sessionId },
+    include: {
+      HookEvent: true,
+    },
+  });
+
+  if (!sessionWithEvents) {
+    throw new NotFoundError('Session not found');
+  }
+
+  return sessionWithEvents;
 };

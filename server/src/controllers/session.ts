@@ -18,3 +18,12 @@ export const get = async (req: Request, res: Response, next: NextFunction) => {
     next(error);
   }
 };
+
+export const getWithEvents = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const operationResult = await sessionService.getSessionWithEvents(req.params.id);
+    res.status(200).json(operationResult);
+  } catch (error) {
+    next(error);
+  }
+};

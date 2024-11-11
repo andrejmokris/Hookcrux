@@ -1,3 +1,4 @@
+import { db } from '@app/db/prisma';
 import { redisClient } from '@app/db/redis';
 import * as sessionService from '@app/services/v1/session';
 import { HookEvent } from '@app/types/event';
@@ -26,17 +27,25 @@ export const createEvent = async (sessionId: string, req: Request) => {
     }
   });
 
+  const headersObj: Record<string, string> = {};
+  forwardHeaders.forEach((value, key) => {
+    headersObj[key] = value;
+  });
+
   const newEvent: HookEvent = {
     path: reqPath,
     body: req.body,
-    headers: forwardHeaders,
+    headers: headersObj,
     method: req.method,
     query: req.query,
+    hostname: String(req.hostname),
   };
 
-  await forwardEvent(sessionId, newEvent);
+  const savedEvent = await db.hookEvent.create({ data: { sessionId: session.id, ...newEvent } });
 
-  return newEvent;
+  await forwardEvent(sessionId, { ...newEvent, id: savedEvent.id });
+
+  return { ...newEvent, id: savedEvent.id };
 };
 
 export const forwardEvent = async (sessionId: string, event: HookEvent) => {

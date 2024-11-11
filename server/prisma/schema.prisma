@@ -14,9 +14,23 @@ datasource db {
 }
 
 model HookSession {
-  id             String   @id @default(uuid())
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id             String      @id @default(uuid())
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
   name           String?
   allowedHeaders String[]
+  HookEvent      HookEvent[]
+}
+
+model HookEvent {
+  id        Int         @id @default(autoincrement())
+  createdAt DateTime    @default(now())
+  session   HookSession @relation(fields: [sessionId], references: [id])
+  sessionId String
+  path      String
+  body      Json
+  headers   Json
+  method    String
+  query     Json
+  hostname  String
 }

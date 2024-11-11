@@ -1,4 +1,4 @@
-import CodeBlock from '@/components/code-block';
+import { SetupTutorial } from '@/components/setup-tutorial';
 import { useToast } from '@/hooks/use-toast';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
@@ -38,23 +38,10 @@ export const SessionPage = () => {
 
   return (
     <div className="container mx-auto px-4 space-y-8">
-      <div className="space-y-2">
-        <p className="font-semibold text-lg">Start the CLI client to begin receiving events:</p>
-        <CodeBlock command={`npx hookcrux-client ${id}`} />
-      </div>
-
-      <div className="space-y-3">
-        <p className="font-semibold text-lg">Direct webhooks to:</p>
-        <CodeBlock command={`https://api.mokris.fit/api/v1/webhook-sessions/${id}/send-event/*`} />
-        <p>
-          The endpoint supports all methods (GET, POST, PUT, DELETE, etc.).{' '}
-          <span className="font-semibold">Replace the *</span> with the route that matches your backend's webhook
-          endpoint configuration to properly route incoming webhook events.
-        </p>
-      </div>
+      <SetupTutorial id={id} />
 
       <div className="space-y-2">
-        <p className="font-semibold text-lg">Session events:</p>
+        <p className="text-lg font-semibold px-4">Session Events:</p>
         <div className="flex flex-col gap-4">
           {hookEvents.map((event, i) => (
             <p key={i}>{JSON.stringify(event)}</p>
