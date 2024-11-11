@@ -35,6 +35,16 @@ export const SessionPage = () => {
         <CodeBlock command={`npx hookcrux-client ${id}`} />
       </div>
 
+      <div className="space-y-3">
+        <p className="font-semibold text-lg">Direct webhooks to:</p>
+        <CodeBlock command={`https://api.mokris.fit/api/v1/webhook-sessions/${id}/send-event/*`} />
+        <p>
+          The endpoint supports all methods (GET, POST, PUT, DELETE, etc.).{' '}
+          <span className="font-semibold">Replace the *</span> with the route that matches your backend's webhook
+          endpoint configuration to properly route incoming webhook events.
+        </p>
+      </div>
+
       <div className="space-y-2">
         <p className="font-semibold text-lg">Session events:</p>
         <div className="flex flex-col gap-4">
