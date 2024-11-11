@@ -1,3 +1,4 @@
+import CodeBlock from '@/components/code-block';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -28,12 +29,19 @@ export const SessionPage = () => {
   }, [id]);
 
   return (
-    <div className="container mx-auto px-4">
-      <h1 className="font-semibold text-xl">Session page - {id}</h1>
-      <div className="flex flex-col gap-4 pt-4">
-        {hookEvents.map((event, i) => (
-          <p key={i}>{JSON.stringify(event)}</p>
-        ))}
+    <div className="container mx-auto px-4 space-y-8">
+      <div className="space-y-2">
+        <p className="font-semibold text-lg">Start the CLI client to begin receiving events:</p>
+        <CodeBlock command={`npx hookcrux-client ${id}`} />
+      </div>
+
+      <div className="space-y-2">
+        <p className="font-semibold text-lg">Session events:</p>
+        <div className="flex flex-col gap-4">
+          {hookEvents.map((event, i) => (
+            <p key={i}>{JSON.stringify(event)}</p>
+          ))}
+        </div>
       </div>
     </div>
   );
