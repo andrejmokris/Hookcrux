@@ -144,6 +144,8 @@ export const WebhookCard: FC<HookEvent> = (props) => {
                   margin: 0,
                   borderRadius: '6px',
                   minHeight: '120px',
+                  maxHeight: '400px',
+                  overflow: 'auto',
                 }}
               >
                 {JSON.stringify(props.query, null, 2)}
