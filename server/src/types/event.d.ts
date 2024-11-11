@@ -1,5 +1,6 @@
 export type HookEvent = {
   id?: number;
+  createdAt?: Date;
   sessionId: string;
   path: string;
   body: Record<string, any>;
