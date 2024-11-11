@@ -66,7 +66,9 @@ export const WebhookCard: FC<HookEvent> = (props) => {
         <div className="flex items-center space-x-2">
           <User className="h-4 w-4 text-muted-foreground" />
           <span className="text-sm truncate" title={props.headers['user-agent']}>
-            {props.headers['user-agent']?.slice(0, 30)}
+            {props.headers['user-agent']?.length > 40
+              ? props.headers['user-agent'].slice(0, 40) + '...'
+              : props.headers['user-agent']}
           </span>
         </div>
       </CardContent>
