@@ -1,7 +1,7 @@
 import { apiClient } from '@/lib/api';
 import authStore from '@/stores/auth-store';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 
 interface UserState {
   isLoading: boolean;
@@ -15,6 +15,7 @@ interface UserState {
 const useAuth = (): UserState => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const [searchParams] = useSearchParams();
 
   const authState = authStore();
 
@@ -45,7 +46,7 @@ const useAuth = (): UserState => {
     queryClient.invalidateQueries({
       queryKey: ['auth'],
     });
-    navigate('/dashboard');
+    navigate(searchParams.get('redirect') ?? '/dashboard');
     return data;
   };
 

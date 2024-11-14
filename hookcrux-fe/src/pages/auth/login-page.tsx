@@ -4,9 +4,11 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Github } from 'lucide-react';
 import { useState } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 export default function Component() {
   const [email, setEmail] = useState('');
+  const [searchParams] = useSearchParams();
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
@@ -20,7 +22,7 @@ export default function Component() {
 
   const handleGithubLogin = () => {
     const clientID = import.meta.env.VITE_GITHUB_CLIENT_ID;
-    const redirectURI = `${window.location.origin}/auth/github/callback`;
+    const redirectURI = `${window.location.origin}/auth/github/callback?${searchParams.get('redirect') ? `redirect=${searchParams.get('redirect')}` : ''}`;
     window.location.href = `https://github.com/login/oauth/authorize?client_id=${clientID}&redirect_uri=${redirectURI}`;
   };
 

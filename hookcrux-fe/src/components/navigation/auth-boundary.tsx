@@ -9,7 +9,7 @@ export const AuthBoundary = ({ children }: { children: React.ReactNode }) => {
   }
 
   if (!auth.isAuthenticated && !auth.isFetching) {
-    return <Navigate to="/log-in" />;
+    return <Navigate to={`/log-in?redirect=${window.location.pathname}`} />;
   }
 
   return <div>{children}</div>;

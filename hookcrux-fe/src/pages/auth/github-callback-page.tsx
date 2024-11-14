@@ -23,7 +23,6 @@ export const GithubCallbackPage = () => {
           title: 'Successfully logged in via GitHub!',
           description: 'You can use the platform.',
         });
-        navigate('/dashboard');
         return data;
       } catch {
         toast({
