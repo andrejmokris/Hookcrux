@@ -10,8 +10,7 @@ import { SessionPage } from './pages/session-page';
 import { AuthRoutes } from './routes/auth-routes';
 
 export default function App() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const auth = useAuth();
+  useAuth();
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
