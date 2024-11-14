@@ -1,10 +1,13 @@
+import useAuth from '@/hooks/use-auth';
 import { Menu, Zap } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { NavUser } from './navigation/user-nav';
 
 export const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  const auth = useAuth();
 
   const NavLinks = () => (
     <>
@@ -34,11 +37,13 @@ export const Header = () => {
           Hookcrux
         </span>
       </Link>
-      <nav className="hidden md:block">
+      <nav className="hidden md:flex space-x-6 items-center">
         <ul className="flex space-x-6">
           <NavLinks />
         </ul>
+        {auth.isAuthenticated ? <NavUser /> : <Link to={'/log-in'}>Log in</Link>}
       </nav>
+
       <button className="md:hidden text-white" onClick={toggleMobileMenu} aria-label="Toggle menu">
         <Menu className="w-6 h-6" />
       </button>

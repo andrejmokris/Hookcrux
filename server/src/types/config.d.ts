@@ -6,6 +6,10 @@ export type Config = {
     accessTokenExpiration: number;
     refreshTokenExpiration: number;
     algorithm: string;
+    github: {
+      clientId: string;
+      clientSecret: string;
+    };
     cookieOptions: {
       httpOnly: boolean;
       secure: boolean;

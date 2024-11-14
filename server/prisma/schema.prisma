@@ -13,6 +13,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id            String        @id @default(cuid())
+  email         String?       @unique
+  verifiedEmail Boolean       @default(false)
+  password      String?
+  githubId      Int?          @unique
+  name          String?
+  avatar_url    String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+  hookSessions  HookSession[]
+
+  @@index([email])
+  @@index([githubId])
+}
+
 model HookSession {
   id             String      @id @default(uuid())
   createdAt      DateTime    @default(now())
@@ -20,6 +36,8 @@ model HookSession {
   name           String?
   allowedHeaders String[]
   HookEvent      HookEvent[]
+  User           User?       @relation(fields: [userId], references: [id])
+  userId         String?
 }
 
 model HookEvent {

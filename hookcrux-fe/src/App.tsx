@@ -2,24 +2,31 @@ import { Route, Routes } from 'react-router-dom';
 import { Footer } from './components/footer';
 import { Header } from './components/header';
 import { ThemeProvider } from './components/theme-provider';
+import useAuth from './hooks/use-auth';
+import { GithubCallbackPage } from './pages/auth/github-callback-page';
+import LoginPage from './pages/auth/login-page';
 import { LandingPage } from './pages/landing-page';
 import { SessionPage } from './pages/session-page';
+import { AuthRoutes } from './routes/auth-routes';
 
 export default function App() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const auth = useAuth();
+
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="min-h-screen flex flex-col bg-black text-white overflow-hidden">
+      <div className="min-h-screen flex flex-col bg-black text-white overflow-hidden w-full">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900 via-black to-black opacity-50"></div>
-
         <Header />
-
-        <main className="flex-grow relative z-10 pb-10">
+        <main className="flex-grow flex relative z-10 w-full items-center justify-center">
           <Routes>
-            <Route path="/" Component={LandingPage} />
-            <Route path="/session/:id" Component={SessionPage} />
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/log-in" element={<LoginPage />} />
+            <Route path="/auth/github/callback" element={<GithubCallbackPage />} />
+            <Route path="/session/:id" element={<SessionPage />} />
+            <Route path="/dashboard/*" element={<AuthRoutes />} />
           </Routes>
         </main>
-
         <Footer />
       </div>
     </ThemeProvider>

@@ -11,6 +11,10 @@ const defaultConfig: Config = {
     accessTokenExpiration: 60 * 15, // 15 minutes
     refreshTokenExpiration: 60 * 60 * 24 * 30, // 30 days
     algorithm: 'HS256',
+    github: {
+      clientId: getEnvironmentValue('GITHUB_CLIENT_ID', 'changemepls'),
+      clientSecret: getEnvironmentValue('GITHUB_CLIENT_SECRET', 'changemepls'),
+    },
     cookieOptions: {
       httpOnly: true,
       secure: true,
