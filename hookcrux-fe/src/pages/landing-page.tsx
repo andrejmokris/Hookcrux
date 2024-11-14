@@ -20,7 +20,7 @@ export const LandingPage = () => {
   });
 
   return (
-    <main className="relative">
+    <main>
       <section className="container mx-auto px-4 py-20 text-center">
         <motion.h1
           className="text-4xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-blue-500 to-blue-600"

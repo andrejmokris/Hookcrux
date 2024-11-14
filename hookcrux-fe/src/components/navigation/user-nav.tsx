@@ -9,24 +9,21 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import useAuth from '@/hooks/use-auth';
-import { BadgeCheck, Bell, CreditCard, LogOut, Sparkles } from 'lucide-react';
+import { Bell, CreditCard, LayoutDashboard, LogOut, Sparkles } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export function NavUser() {
   const auth = useAuth();
 
   return (
-    <DropdownMenu>
+    <DropdownMenu modal={false}>
       <DropdownMenuTrigger asChild>
         <Avatar className="h-8 w-8 rounded-lg">
           <AvatarImage src={auth.user?.avatar_url ?? undefined} alt={auth.user?.name ?? auth.user?.email ?? ''} />
           <AvatarFallback className="rounded-lg">CN</AvatarFallback>
         </Avatar>
       </DropdownMenuTrigger>
-      <DropdownMenuContent
-        className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
-        align="start"
-        sideOffset={4}
-      >
+      <DropdownMenuContent className="min-w-56 rounded-lg" align="start" sideOffset={2}>
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
             <Avatar className="h-8 w-8 rounded-lg">
@@ -49,8 +46,10 @@ export function NavUser() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <BadgeCheck />
-            Account
+            <Link to={'/dashboard'} className="flex items-center gap-2">
+              <LayoutDashboard />
+              Dashboard
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem>
             <CreditCard />

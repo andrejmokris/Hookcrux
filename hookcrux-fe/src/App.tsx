@@ -15,10 +15,10 @@ export default function App() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <div className="min-h-screen flex flex-col bg-black text-white overflow-hidden w-full">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900 via-black to-black opacity-50"></div>
+      <div className="min-h-screen flex flex-col bg-black text-white w-full overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900 via-black to-black opacity-50 z-0"></div>
         <Header />
-        <main className="flex-grow flex relative z-10 w-full items-center justify-center">
+        <main className="flex-grow flex relative w-full items-center justify-center">
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/log-in" element={<LoginPage />} />
