@@ -6,7 +6,7 @@ export const AuthRoutes = () => {
   return (
     <AuthBoundary>
       <Routes>
-        <Route path="/" Component={DashboardPage} />
+        <Route path="/*" Component={DashboardPage} />
       </Routes>
     </AuthBoundary>
   );
