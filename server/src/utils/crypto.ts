@@ -60,7 +60,7 @@ export const verifyToken = (token: string): JwtPayload | null => {
       issuer: config.server.hostname,
     }) as JwtPayload;
     return payload;
-  } catch (error) {
+  } catch {
     return null;
   }
 };

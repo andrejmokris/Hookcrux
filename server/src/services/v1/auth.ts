@@ -56,7 +56,7 @@ export const githubCallback = async (code: string) => {
       email: githubUser.email,
       name: githubUser.name,
       avatar_url: githubUser.avatar_url,
-      verifiedEmail: true,
+      verifiedEmail: githubUser.email ? true : false,
     },
   });
 

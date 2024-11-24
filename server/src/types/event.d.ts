@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 export type HookEvent = {
   id?: number;
   createdAt?: Date;
