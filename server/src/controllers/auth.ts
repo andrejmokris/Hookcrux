@@ -27,8 +27,8 @@ export const passwordSignIn = async (req: Request, res: Response, next: NextFunc
 export const passwordSignUp = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const reqBody = req.body as z.infer<typeof signUpSchema>;
-    await authService.passwordSignUp(reqBody);
-    res.status(201);
+    const operationResult = await authService.passwordSignUp(reqBody);
+    res.status(201).json(operationResult);
   } catch (error) {
     next(error);
   }

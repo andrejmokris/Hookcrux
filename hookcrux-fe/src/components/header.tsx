@@ -45,7 +45,7 @@ export const Header = () => {
           </ul>
         )}
 
-        {auth.isAuthenticated ? <NavUser /> : <Link to={'/log-in'}>Log in</Link>}
+        {auth.isAuthenticated ? <NavUser /> : <Link to={'/sign-in'}>Sign in</Link>}
       </nav>
 
       <button className="md:hidden text-white" onClick={toggleMobileMenu} aria-label="Toggle menu">

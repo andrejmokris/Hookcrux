@@ -1,7 +1,8 @@
 import { Footer } from '@/components/footer';
 import { Header } from '@/components/header';
 import { GithubCallbackPage } from '@/pages/auth/github-callback-page';
-import LoginPage from '@/pages/auth/login-page';
+import SignInPage from '@/pages/auth/sign-in-page';
+import SignUpPage from '@/pages/auth/sign-up-page';
 import { LandingPage } from '@/pages/landing-page';
 import { SessionPage } from '@/pages/session-page';
 import { Route, Routes } from 'react-router-dom';
@@ -14,7 +15,8 @@ export const HomeRoutes = () => {
       <main className="flex-grow flex flex-col relative w-full items-center">
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/log-in" element={<LoginPage />} />
+          <Route path="/sign-in" element={<SignInPage />} />
+          <Route path="/sign-up" element={<SignUpPage />} />
           <Route path="/auth/github/callback" element={<GithubCallbackPage />} />
           <Route path="/session/:id" element={<SessionPage />} />
         </Routes>

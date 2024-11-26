@@ -96,10 +96,15 @@ export const passwordSignUp = async (data: z.infer<typeof signUpSchema>) => {
 
   const hashedPassword = await hashPassword(data.password);
 
-  await db.user.create({
+  const createdUser = await db.user.create({
     data: {
       email: data.email,
       password: hashedPassword,
     },
   });
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { password, ...newUser } = createdUser;
+
+  return newUser;
 };
