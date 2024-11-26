@@ -54,6 +54,13 @@ export const getAll = async (userId: string) => {
         },
       },
     },
+    include: {
+      _count: {
+        select: {
+          members: true,
+        },
+      },
+    },
   });
 
   return projects;

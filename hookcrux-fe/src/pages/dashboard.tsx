@@ -2,6 +2,8 @@ import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { AppSidebar } from '@/dashboard/app-sidebar';
 import { BreadcrumbNav } from '@/dashboard/breadcrumb-nav';
+import { Route, Routes } from 'react-router-dom';
+import { HomePage } from './dashboard/home-page';
 
 export const DashboardPage = () => {
   return (
@@ -16,7 +18,10 @@ export const DashboardPage = () => {
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
-          <h1 className="font-bold text-2xl">Dashboard</h1>
+          <Routes>
+            <Route path="/" Component={HomePage} />
+            <Route path="/projects" element={<h1 className="font-bold text-2xl">Projects</h1>} />
+          </Routes>
         </div>
       </SidebarInset>
     </SidebarProvider>
