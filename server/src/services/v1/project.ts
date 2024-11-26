@@ -60,6 +60,14 @@ export const getAll = async (userId: string) => {
           members: true,
         },
       },
+      members: {
+        where: {
+          userId: userId,
+        },
+        select: {
+          role: true,
+        },
+      },
     },
   });
 

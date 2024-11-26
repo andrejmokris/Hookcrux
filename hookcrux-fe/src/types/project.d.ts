@@ -7,4 +7,9 @@ type Project = {
   _count: {
     members: number;
   };
+  members: {
+    role: ProjectRole;
+  }[];
 };
+
+type ProjectRole = 'OWNER' | 'ADMIN' | 'MEMBER';
