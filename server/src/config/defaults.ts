@@ -20,6 +20,7 @@ const defaultConfig: Config = {
       secure: true,
       sameSite: true,
     },
+    inviteTokenExpiration: 60 * 60 * 24 * 7, // 7 days
   },
   server: {
     port: Number(getEnvironmentValue('PORT', '3000')),

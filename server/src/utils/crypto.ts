@@ -64,3 +64,9 @@ export const verifyToken = (token: string): JwtPayload | null => {
     return null;
   }
 };
+
+export const generateInviteToken = () => {
+  const token = crypto.randomBytes(64).toString('hex');
+
+  return token;
+};

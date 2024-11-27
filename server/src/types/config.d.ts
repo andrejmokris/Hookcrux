@@ -15,6 +15,7 @@ export type Config = {
       secure: boolean;
       sameSite: boolean;
     };
+    inviteTokenExpiration: number;
   };
   server: {
     port: number;

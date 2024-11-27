@@ -1,12 +1,12 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { apiClient } from '@/lib/api';
 import { useQuery } from '@tanstack/react-query';
 import { MoreVertical } from 'lucide-react';
 import { useParams } from 'react-router-dom';
+import { AddProjectMember } from './add-member';
 
 function UserLoading() {
   return (
@@ -35,7 +35,8 @@ export const ProjectMembers = () => {
     <Card className="flex flex-col h-full max-h-[calc(100dvh-64px)]">
       <CardHeader className="bg-muted/50 ">
         <CardTitle className="w-full items-center flex justify-between">
-          Members<Button variant={'default'}>Invite member</Button>
+          Members
+          <AddProjectMember projectId={id as string} />
         </CardTitle>
       </CardHeader>
       <CardContent className="flex-grow overflow-auto  py-4">

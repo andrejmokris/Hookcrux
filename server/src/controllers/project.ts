@@ -70,3 +70,14 @@ export const addMember = async (req: Request, res: Response, next: NextFunction)
     next(error);
   }
 };
+
+export const generateInviteLink = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = (req as AuthRequest).userId;
+
+  try {
+    const operationResult = await projectService.generateInviteLink(userId, req.params.id);
+    res.json(operationResult);
+  } catch (error) {
+    next(error);
+  }
+};

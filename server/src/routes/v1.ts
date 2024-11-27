@@ -4,6 +4,7 @@ import * as projectController from '@app/controllers/project';
 import * as sessionController from '@app/controllers/session';
 import * as userController from '@app/controllers/user';
 import { authenticate } from '@app/middleware/authentication';
+import { roleGuard } from '@app/middleware/role-guard';
 import { validate } from '@app/middleware/validate';
 import { githubLoginSchema } from '@app/validations/github-login';
 import { logInSchema, signUpSchema } from '@app/validations/password-login';
@@ -34,11 +35,13 @@ router.get('/projects/:id', authenticate, projectController.get);
 router.get('/projects/:id/members', authenticate, projectController.getMembers);
 
 router.post('/projects', [authenticate, validate(createProjectSchema)], projectController.create);
-router.delete('/projects/:id', authenticate, projectController.deleteProject);
+router.post('/projects/:id/invite', [authenticate, roleGuard('ADMIN')], projectController.generateInviteLink);
 router.post(
   '/projects/:id/members/:assigneeId',
   [authenticate, validate(createProjectSchema)],
   projectController.addMember,
 );
+
+router.delete('/projects/:id', authenticate, projectController.deleteProject);
 
 export const v1Routes = router;

@@ -2,7 +2,7 @@ import { getEnvironmentValue } from '@app/utils/environments';
 
 export const devConfig = {
   auth: {
-    accessTokenExpiration: 60 * 60, // 1 hour
+    accessTokenExpiration: 60 * 60 * 24, // 1 day
     cookieOptions: {
       secure: false,
     },

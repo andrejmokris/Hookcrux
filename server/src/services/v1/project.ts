@@ -1,6 +1,9 @@
+import { config } from '@app/config/defaults';
 import { db } from '@app/db/prisma';
+import { generateInviteToken } from '@app/utils/crypto';
 import { ConflictError, NotFoundError, UnauthorizedError } from '@app/utils/errors';
 import { createProjectSchema } from '@app/validations/project';
+import moment from 'moment';
 import { z } from 'zod';
 
 export const create = async (userId: string, data: z.infer<typeof createProjectSchema>) => {
@@ -206,4 +209,19 @@ export const updateMemberRole = async (
       role: role,
     },
   });
+};
+
+export const generateInviteLink = async (userId: string, projectId: string) => {
+  const token = generateInviteToken();
+
+  const invite = await db.projectInvite.create({
+    data: {
+      projectId: projectId,
+      createdById: userId,
+      inviteToken: token,
+      expiresAt: moment().add(config.auth.inviteTokenExpiration, 'seconds').toDate(),
+    },
+  });
+
+  return invite;
 };
