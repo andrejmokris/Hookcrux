@@ -1,5 +1,5 @@
 import { db } from '@app/db/prisma';
-import { ProjectRole } from '@prisma/client';
+import { ProjectRole } from '@app/types/project';
 import { NextFunction, Request, Response } from 'express';
 import { AuthRequest } from './authentication';
 
