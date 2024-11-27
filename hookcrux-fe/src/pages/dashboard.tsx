@@ -4,6 +4,8 @@ import { AppSidebar } from '@/dashboard/app-sidebar';
 import { BreadcrumbNav } from '@/dashboard/breadcrumb-nav';
 import { Route, Routes } from 'react-router-dom';
 import { HomePage } from './dashboard/home-page';
+import { ProjectDetailPage } from './dashboard/project-detail-page';
+import { ProjectsPage } from './dashboard/projects-page';
 
 export const DashboardPage = () => {
   return (
@@ -20,7 +22,8 @@ export const DashboardPage = () => {
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <Routes>
             <Route path="/" Component={HomePage} />
-            <Route path="/projects" element={<h1 className="font-bold text-2xl">Projects</h1>} />
+            <Route path="/projects" Component={ProjectsPage} />
+            <Route path="/projects/:id" Component={ProjectDetailPage} />
           </Routes>
         </div>
       </SidebarInset>

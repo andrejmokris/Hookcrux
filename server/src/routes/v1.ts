@@ -31,6 +31,7 @@ router.get('/webhook-sessions/:id/events', eventController.subscribe);
 // Projects
 router.get('/projects', authenticate, projectController.getAll);
 router.get('/projects/:id', authenticate, projectController.get);
+router.get('/projects/:id/members', authenticate, projectController.getMembers);
 
 router.post('/projects', [authenticate, validate(createProjectSchema)], projectController.create);
 router.delete('/projects/:id', authenticate, projectController.deleteProject);

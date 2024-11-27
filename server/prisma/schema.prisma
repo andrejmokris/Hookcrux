@@ -14,17 +14,20 @@ datasource db {
 }
 
 model User {
-  id            String          @id @default(cuid())
-  email         String?         @unique
-  verifiedEmail Boolean         @default(false)
-  password      String?
-  githubId      Int?            @unique
-  name          String?
-  avatar_url    String?
-  createdAt     DateTime        @default(now())
-  updatedAt     DateTime        @updatedAt
-  hookSessions  HookSession[]
-  UserProject   ProjectMember[]
+  id                     String          @id @default(cuid())
+  email                  String?         @unique
+  verifiedEmail          Boolean         @default(false)
+  password               String?
+  githubId               Int?            @unique
+  name                   String?
+  avatar_url             String?
+  createdAt              DateTime        @default(now())
+  updatedAt              DateTime        @updatedAt
+  hookSessions           HookSession[]
+  UserProject            ProjectMember[]
+  createdProjectInvites  ProjectInvite[] @relation("CreatedInvites")
+  acceptedProjectInvites ProjectInvite[] @relation("AcceptedInvites")
+  ProjectInvite          ProjectInvite[]
 
   @@index([email])
   @@index([githubId])
@@ -57,13 +60,14 @@ model HookEvent {
 }
 
 model Project {
-  id          String          @id @default(cuid())
-  name        String
-  description String?
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
-  members     ProjectMember[]
-  ProjectHook ProjectHook[]
+  id            String          @id @default(cuid())
+  name          String
+  description   String?
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  members       ProjectMember[]
+  ProjectHook   ProjectHook[]
+  ProjectInvite ProjectInvite[]
 }
 
 model ProjectMember {
@@ -96,4 +100,22 @@ model ProjectHook {
   createdAt   DateTime    @default(now())
   updatedAt   DateTime    @updatedAt
   hookEvents  HookEvent[]
+}
+
+model ProjectInvite {
+  id           String      @id @default(cuid())
+  projectId    String
+  project      Project     @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectRole  ProjectRole @default(MEMBER)
+  createdAt    DateTime    @default(now())
+  expiresAt    DateTime
+  createdBy    User        @relation("CreatedInvites", fields: [createdById], references: [id], onDelete: Cascade)
+  createdById  String
+  inviteToken  String      @unique
+  acceptedBy   User?       @relation("AcceptedInvites", fields: [acceptedById], references: [id])
+  acceptedById String?
+  User         User?       @relation(fields: [userId], references: [id])
+  userId       String?
+
+  @@index([inviteToken])
 }

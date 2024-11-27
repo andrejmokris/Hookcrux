@@ -26,6 +26,17 @@ export const getAll = async (req: Request, res: Response, next: NextFunction) =>
   }
 };
 
+export const getMembers = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = (req as AuthRequest).userId;
+
+  try {
+    const operationResult = await projectService.getMembers(userId, req.params.id);
+    res.json(operationResult);
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const create = async (req: Request, res: Response, next: NextFunction) => {
   const userId = (req as AuthRequest).userId;
 

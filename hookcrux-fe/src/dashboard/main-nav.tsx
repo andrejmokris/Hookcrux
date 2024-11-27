@@ -34,11 +34,12 @@ export function NavMain({
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => {
+          const isActive = location.pathname.endsWith(item.url);
           if (!item.items || item.items.length === 0) {
             return (
               <SidebarMenuItem key={item.title}>
                 <SidebarMenuButton asChild>
-                  <Link to={item.url}>
+                  <Link to={item.url} className={isActive ? 'text-primary' : 'text-primary/70'}>
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>
                   </Link>
@@ -49,7 +50,7 @@ export function NavMain({
           return (
             <Collapsible key={item.title} asChild defaultOpen={item.isActive} className="group/collapsible">
               <SidebarMenuItem>
-                <CollapsibleTrigger asChild>
+                <CollapsibleTrigger asChild className={isActive ? 'text-primary' : 'text-primary/70'}>
                   <SidebarMenuButton tooltip={item.title}>
                     {item.icon && <item.icon />}
                     <span>{item.title}</span>

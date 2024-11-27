@@ -17,20 +17,10 @@ const data = {
       isActive: true,
     },
     {
-      title: 'Sessions',
-      url: '#',
+      title: 'Projects',
+      url: '/dashboard/projects',
       icon: SquareTerminal,
       isActive: true,
-      items: [
-        {
-          title: 'Create New',
-          url: '/dashboard/sessions/create-new',
-        },
-        {
-          title: 'My sessions',
-          url: '/dashboard/sessions',
-        },
-      ],
     },
 
     {

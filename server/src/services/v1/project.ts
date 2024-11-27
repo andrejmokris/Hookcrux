@@ -74,6 +74,37 @@ export const getAll = async (userId: string) => {
   return projects;
 };
 
+export const getMembers = async (userId: string, projectId: string) => {
+  const userMembership = await db.projectMember.findFirst({
+    where: {
+      userId: userId,
+      projectId: projectId,
+    },
+  });
+
+  if (!userMembership) {
+    throw new UnauthorizedError('You do not have permission to access this project');
+  }
+
+  const projectMembers = await db.projectMember.findMany({
+    where: {
+      projectId: projectId,
+    },
+    include: {
+      user: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          avatar_url: true,
+        },
+      },
+    },
+  });
+
+  return projectMembers;
+};
+
 export const deleteProject = async (userId: string, projectId: string) => {
   const projectMembership = await db.projectMember.findFirst({
     where: {
