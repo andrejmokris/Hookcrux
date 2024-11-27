@@ -17,7 +17,7 @@ export default function CodeBlock({ command }: CodeBlockProps) {
 
   return (
     <div className="relative flex items-center bg-muted rounded-md px-2">
-      <pre className="py-4 px-2 pr-12 overflow-x-auto font-mono text-sm w-[90%]">{command}</pre>
+      <pre className="py-4 px-2 pr-4 overflow-x-auto font-mono text-sm w-[90%] no-scrollbar">{command}</pre>
       <Button
         variant="ghost"
         size="icon"
