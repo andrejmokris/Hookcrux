@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import { HomePage } from './dashboard/home-page';
 import { ProjectDetailPage } from './dashboard/project-detail-page';
 import { ProjectsPage } from './dashboard/projects-page';
+import { InvitePage } from './invite-page';
 
 export const DashboardPage = () => {
   return (
@@ -24,6 +25,7 @@ export const DashboardPage = () => {
             <Route path="/" Component={HomePage} />
             <Route path="/projects" Component={ProjectsPage} />
             <Route path="/projects/:id" Component={ProjectDetailPage} />
+            <Route path="/invite" Component={InvitePage} />
           </Routes>
         </div>
       </SidebarInset>

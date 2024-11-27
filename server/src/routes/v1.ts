@@ -31,6 +31,8 @@ router.get('/webhook-sessions/:id/events', eventController.subscribe);
 
 // Projects
 router.get('/projects', authenticate, projectController.getAll);
+router.get('/projects/invite', authenticate, projectController.getInvite);
+
 router.get('/projects/:id', authenticate, projectController.get);
 router.get('/projects/:id/members', authenticate, projectController.getMembers);
 

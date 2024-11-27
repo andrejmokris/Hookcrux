@@ -81,3 +81,14 @@ export const generateInviteLink = async (req: Request, res: Response, next: Next
     next(error);
   }
 };
+
+export const getInvite = async (req: Request, res: Response, next: NextFunction) => {
+  const token = req.query.token ?? '';
+
+  try {
+    const operationResult = await projectService.getInvite(token as string);
+    res.json(operationResult);
+  } catch (error) {
+    next(error);
+  }
+};

@@ -225,3 +225,35 @@ export const generateInviteLink = async (userId: string, projectId: string) => {
 
   return invite;
 };
+
+export const getInvite = async (token: string) => {
+  const invite = await db.projectInvite.findFirst({
+    where: {
+      inviteToken: token,
+    },
+    include: {
+      project: true,
+      createdBy: {
+        select: {
+          name: true,
+          email: true,
+          avatar_url: true,
+        },
+      },
+    },
+  });
+
+  if (!invite) {
+    throw new NotFoundError('Invite not found');
+  }
+
+  if (invite.acceptedById) {
+    throw new ConflictError('Invite already accepted');
+  }
+
+  if (moment().isAfter(invite.expiresAt)) {
+    throw new UnauthorizedError('Invite has expired');
+  }
+
+  return invite;
+};

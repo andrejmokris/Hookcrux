@@ -38,7 +38,9 @@ export const AddProjectMember: FC<AddProjectMemberProps> = ({ projectId }) => {
           </Button>
           {inviteUserMutation.isSuccess && (
             <div className="overflow-hidden">
-              <CodeBlock command={`${window.location.origin}/invite?token=${inviteUserMutation.data.inviteToken}`} />
+              <CodeBlock
+                command={`${window.location.origin}/dashboard/invite?token=${inviteUserMutation.data.inviteToken}`}
+              />
             </div>
           )}
         </DialogContent>

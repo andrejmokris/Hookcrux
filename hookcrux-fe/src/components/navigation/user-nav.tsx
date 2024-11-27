@@ -50,7 +50,7 @@ export function NavUser() {
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
-            <Link to={'/dashboard'} className="flex items-center gap-2">
+            <Link to={'/dashboard'} className="flex items-center gap-2 w-full">
               <LayoutDashboard />
               Dashboard
             </Link>
