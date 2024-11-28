@@ -273,7 +273,7 @@ export const replyInvite = async (userId: string, inviteToken: string, accepted:
     throw new ConflictError('Invite already accepted');
   }
 
-  if (invite.expiresAt < moment().toDate()) {
+  if (moment().isAfter(invite.expiresAt)) {
     throw new UnauthorizedError('Invite has expired');
   }
 
