@@ -115,6 +115,7 @@ model ProjectInvite {
   acceptedBy   User?       @relation("AcceptedInvites", fields: [acceptedById], references: [id])
   acceptedById String?
   User         User?       @relation(fields: [userId], references: [id])
+  accepterAt   DateTime?
   userId       String?
 
   @@index([inviteToken])

@@ -29,7 +29,7 @@ export function NavUserSidebar() {
               <Avatar className="h-8 w-8 rounded-lg">
                 <AvatarImage src={auth.user?.avatar_url ?? undefined} alt={auth.user?.name ?? auth.user?.email ?? ''} />
                 <AvatarFallback className="rounded-lg">
-                  {auth.user?.name?.split(' ')[0] ?? auth.user?.email?.split('@')[0]}
+                  {auth.user?.name?.split(' ')[0] ?? auth.user?.email?.split('@')[0].slice(0, 1).toLocaleUpperCase()}
                 </AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">

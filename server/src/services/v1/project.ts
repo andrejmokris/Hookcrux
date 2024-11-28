@@ -257,3 +257,66 @@ export const getInvite = async (token: string) => {
 
   return invite;
 };
+
+export const replyInvite = async (userId: string, inviteToken: string, accepted: boolean) => {
+  const invite = await db.projectInvite.findFirst({
+    where: {
+      inviteToken: inviteToken,
+    },
+  });
+
+  if (!invite) {
+    throw new NotFoundError('Invite not found');
+  }
+
+  if (invite.acceptedById) {
+    throw new ConflictError('Invite already accepted');
+  }
+
+  if (invite.expiresAt < moment().toDate()) {
+    throw new UnauthorizedError('Invite has expired');
+  }
+
+  const projectMembership = await db.projectMember.findFirst({
+    where: {
+      userId: userId,
+      projectId: invite.projectId,
+    },
+  });
+
+  if (projectMembership) {
+    throw new ConflictError('User is already a member of this project');
+  }
+
+  if (!accepted) {
+    await db.projectInvite.update({
+      where: {
+        id: invite.id,
+      },
+      data: {
+        expiresAt: moment().toDate(),
+      },
+    });
+    return null;
+  }
+
+  await db.projectInvite.update({
+    where: {
+      id: invite.id,
+    },
+    data: {
+      acceptedById: userId,
+      accepterAt: moment().toDate(),
+    },
+  });
+
+  const newMembership = await db.projectMember.create({
+    data: {
+      userId: userId,
+      projectId: invite.projectId,
+      role: invite.projectRole,
+    },
+  });
+
+  return newMembership;
+};

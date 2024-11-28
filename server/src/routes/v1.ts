@@ -7,6 +7,7 @@ import { authenticate } from '@app/middleware/authentication';
 import { roleGuard } from '@app/middleware/role-guard';
 import { validate } from '@app/middleware/validate';
 import { githubLoginSchema } from '@app/validations/github-login';
+import { inviteReplySchema } from '@app/validations/invite-reply';
 import { logInSchema, signUpSchema } from '@app/validations/password-login';
 import { createProjectSchema } from '@app/validations/project';
 import { Router } from 'express';
@@ -37,6 +38,7 @@ router.get('/projects/:id', authenticate, projectController.get);
 router.get('/projects/:id/members', authenticate, projectController.getMembers);
 
 router.post('/projects', [authenticate, validate(createProjectSchema)], projectController.create);
+router.post('/projects/invite/reply', [authenticate, validate(inviteReplySchema)], projectController.replyInvite);
 router.post('/projects/:id/invite', [authenticate, roleGuard('ADMIN')], projectController.generateInviteLink);
 router.post(
   '/projects/:id/members/:assigneeId',

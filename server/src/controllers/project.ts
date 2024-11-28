@@ -1,5 +1,6 @@
 import { AuthRequest } from '@app/middleware/authentication';
 import * as projectService from '@app/services/v1/project';
+import { inviteReplySchema } from '@app/validations/invite-reply';
 import { createProjectSchema } from '@app/validations/project';
 import { NextFunction, Request, Response } from 'express';
 import { z } from 'zod';
@@ -88,6 +89,22 @@ export const getInvite = async (req: Request, res: Response, next: NextFunction)
   try {
     const operationResult = await projectService.getInvite(token as string);
     res.json(operationResult);
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const replyInvite = async (req: Request, res: Response, next: NextFunction) => {
+  const userId = (req as AuthRequest).userId;
+
+  try {
+    const replyData = req.body as z.infer<typeof inviteReplySchema>;
+
+    const operationResult = await projectService.replyInvite(userId, replyData.inviteToken, replyData.accepted);
+    if (operationResult) {
+      res.status(201).json(operationResult);
+    }
+    res.status(204).send();
   } catch (error) {
     next(error);
   }

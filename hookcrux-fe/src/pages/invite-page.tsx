@@ -3,7 +3,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Skeleton } from '@/components/ui/skeleton';
 import { toast } from '@/hooks/use-toast';
 import { apiClient } from '@/lib/api';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { Users } from 'lucide-react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
@@ -31,6 +31,36 @@ export const InvitePage = () => {
     },
   });
 
+  const inviteReplyMutation = useMutation({
+    mutationKey: ['invite-reply', token],
+    mutationFn: async (reply: boolean) => {
+      const { data } = await apiClient.post<ProjectMember | null>(`/projects/invite/reply`, {
+        accepted: reply,
+        inviteToken: token,
+      });
+      return data;
+    },
+    onSuccess: (data) => {
+      if (!data) {
+        navigate('/dashboard');
+        return;
+      }
+      toast({
+        title: 'Successfully accepted invite!',
+        description: 'You can now access the project.',
+      });
+      navigate(`/dashboard/projects/${data?.projectId}`);
+    },
+    onError: () => {
+      toast({
+        title: 'Failed to accept invite!',
+        description: 'Please try again later or contact support.',
+        variant: 'destructive',
+      });
+      navigate('/dashboard');
+    },
+  });
+
   return (
     <div className="w-full h-full flex items-center justify-center">
       {isLoading || !data ? (
@@ -49,8 +79,10 @@ export const InvitePage = () => {
             <p className="text-sm text-muted-foreground">Invited by: {data.createdBy.name ?? data.createdBy.email}</p>
           </CardContent>
           <CardFooter className="flex justify-end space-x-2">
-            <Button variant="outline">Decline</Button>
-            <Button>Accept</Button>
+            <Button variant="outline" onClick={() => inviteReplyMutation.mutateAsync(false)}>
+              Decline
+            </Button>
+            <Button onClick={() => inviteReplyMutation.mutateAsync(true)}>Accept</Button>
           </CardFooter>
         </Card>
       )}
