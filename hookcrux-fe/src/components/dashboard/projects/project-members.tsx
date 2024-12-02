@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query';
 import { MoreVertical } from 'lucide-react';
 import { useParams } from 'react-router-dom';
 import { AddProjectMember } from './add-member';
+import { ProjectInvitesList } from './project-invites-list';
 
 function UserLoading() {
   return (
@@ -74,7 +75,7 @@ export const ProjectMembers = () => {
         <p className="text-sm text-muted-foreground">
           {data?.length} {data?.length === 1 ? 'member' : 'members'}
         </p>
-        <p className="text-sm text-muted-foreground">View all</p>
+        <ProjectInvitesList />
       </CardFooter>
     </Card>
   );

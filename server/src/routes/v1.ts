@@ -36,6 +36,7 @@ router.get('/projects/invite', authenticate, projectController.getInvite);
 
 router.get('/projects/:id', authenticate, projectController.get);
 router.get('/projects/:id/members', authenticate, projectController.getMembers);
+router.get('/projects/:id/invites', [authenticate, roleGuard('ADMIN')], projectController.getInvitesForProject);
 
 router.post('/projects', [authenticate, validate(createProjectSchema)], projectController.create);
 router.post('/projects/invite/reply', [authenticate, validate(inviteReplySchema)], projectController.replyInvite);

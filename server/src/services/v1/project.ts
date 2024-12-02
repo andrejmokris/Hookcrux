@@ -320,3 +320,32 @@ export const replyInvite = async (userId: string, inviteToken: string, accepted:
 
   return newMembership;
 };
+
+export const getProjectInvites = async (projectId: string) => {
+  const invites = await db.projectInvite.findMany({
+    where: {
+      projectId: projectId,
+      acceptedById: null,
+    },
+    include: {
+      createdBy: {
+        select: {
+          name: true,
+          email: true,
+          avatar_url: true,
+        },
+      },
+      project: {
+        select: {
+          name: true,
+          description: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: 'asc',
+    },
+  });
+
+  return invites;
+};

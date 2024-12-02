@@ -109,3 +109,12 @@ export const replyInvite = async (req: Request, res: Response, next: NextFunctio
     next(error);
   }
 };
+
+export const getInvitesForProject = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const operationResult = await projectService.getProjectInvites(req.params.id);
+    res.json(operationResult);
+  } catch (error) {
+    next(error);
+  }
+};
